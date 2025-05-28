@@ -1,0 +1,26 @@
+{
+  "name": "uc13",
+  "version": "1.0.0",
+  "description": "Projeto NodeJS e MySQL - UC13",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ComputadorQuebrado/projeto_uc13.git"
+  },
+  "keywords": [
+    "express",
+    "express-handlebars",
+    "bootstrap",
+    "mysql",
+    "e-commerce"
+  ],
+  "author": "Edson Medeiros da Silva Pezuti Junior",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ComputadorQuebrado/projeto_uc13/issues"
+  },
+  "homepage": "https://github.com/ComputadorQuebrado/projeto_uc13#readme"
+}
