@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/ComputadorQuebrado/projeto_uc13/issues"
   },
-  "homepage": "https://github.com/ComputadorQuebrado/projeto_uc13#readme"
+  "homepage": "https://github.com/ComputadorQuebrado/projeto_uc13#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
