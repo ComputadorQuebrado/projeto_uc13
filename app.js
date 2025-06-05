@@ -22,3 +22,5 @@ app.get('/', (req, res) => {;
     res.write("Hello World!");
     res.end();
 });
+
+app.listen(8080);
