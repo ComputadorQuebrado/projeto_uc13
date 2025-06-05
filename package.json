@@ -27,6 +27,7 @@
   "homepage": "https://github.com/ComputadorQuebrado/projeto_uc13#readme",
   "dependencies": {
     "express": "^5.1.0",
+    "mysql2": "^3.14.1",
     "nodemon": "^3.1.10"
   }
 }
