@@ -1,0 +1,26 @@
+<h1>Clientes do E-Commerce PC</h1>
+
+{{#if clientes.length}}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-Mail</th>
+                <th scope="col">Endereço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each clientes}}
+                <tr>
+                    <th scope="row">{{this.id}}</th>
+                    <td>{{this.nome}}</td>
+                    <td>{{this.email}}</td>
+                    <td>{{this.endereco}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>Sem clientes disponíveis no momento.</p>
+{{/if}}
