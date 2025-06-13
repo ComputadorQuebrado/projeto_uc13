@@ -5,6 +5,7 @@ const { engine } = require('express-handlebars');
 const mysql = require('mysql2');
 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use('/static', express.static(__dirname + '/static'));
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
@@ -51,5 +52,9 @@ app.get('/clientes', (req, res) => {;
     });
 }
 );
+
+app.get('/adicionarprodutos', (req, res) => {
+    res.render('adicionarprodutos.handlebars');
+});
 
 app.listen(8080);

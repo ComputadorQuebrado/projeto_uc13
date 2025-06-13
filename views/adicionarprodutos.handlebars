@@ -1,0 +1,34 @@
+<h1>Adicionar Produtos</h1>
+
+<form>
+  <fieldset>
+    <div class="form-group">
+      <label for="inputNome">Nome:</label>
+      <input type="text" class="form-control" id="inputNome" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="inputDesc">Descrição:</label>
+      <textarea class="form-control" id="inputDesc" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="inputPreco">Preço:</label>
+      <input type="number" step="0.01" class="form-control" id="inputPreco" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="inputEstoque">Estoque:</label>
+      <input type="number" class="form-control" id="inputEstoque" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
+      <label for="inputCategoria">Categoria:</label>
+      <select class="form-control" id="inputCategoria">
+        <option>Selecione uma categoria</option>
+        <option>Processador</option>
+        <option>Memória RAM</option>
+        <option>Placas de Vídeo</option>
+        <option>Armazenamento</option>
+        <option>Placas-mãe</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar Produto</button>
+  </fieldset>
+</form>
