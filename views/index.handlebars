@@ -1,6 +1,6 @@
 <h1>Produtos do E-Commerce PC</h1>
 
-<a href="/adicionarprodutos" function="button">Adicionar</a>
+<a href="/produtos/add" function="button">Adicionar</a>
 
 {{#if produtos.length}}
     <table class="table">
@@ -9,6 +9,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Descrição</th>
+                <th scope="col">Categoria</th>
                 <th scope="col">Preço</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
                     <th scope="row">{{this.id}}</th>
                     <td>{{this.nome}}</td>
                     <td>{{this.descricao}}</td>
+                    <td>{{this.categoria_id}}</td>
                     <td>{{this.preco}}</td>
                 </tr>
             {{/each}}

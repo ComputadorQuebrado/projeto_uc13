@@ -1,0 +1,26 @@
+<h1>Categorias do E-Commerce PC</h1>
+
+<a href="/categorias/add" function="button">Adicionar</a>
+
+{{#if categorias.length}}
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each categorias}}
+                <tr>
+                    <th scope="row">{{this.id}}</th>
+                    <td>{{this.nome}}</td>
+                    <td>{{this.descricao}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>Sem categorias disponíveis no momento.</p>
+{{/if}}
