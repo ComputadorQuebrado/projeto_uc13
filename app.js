@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
 
+app.use(express.urlencoded({ extended: true }));
+
 const mysql = require('mysql2');
 
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
@@ -40,6 +42,35 @@ app.get('/', (req, res) => {;
 }
 );
 
+app.get('/produtos/add', (req, res) => {
+    let sql = 'SELECT * FROM categorias';
+    conexao.query(sql, function (erro, categorias_qs){
+        if (erro) {
+            console.error('Erro ao consultar categorias: ', erro);
+            res.status(500).send('Erro ao consultar categorias');
+            return;
+        }
+        res.render('adicionarprodutos.handlebars', {categorias: categorias_qs});
+    });
+});
+
+app.post('/produtos/add', (req, res) => {
+    const {nome, descricao, preco, estoque, categoria_id } = req.body;
+
+    const sql = `
+        INSERT INTO produtos (nome, descricao, preco, estoque, categoria_id)
+        VALUES (?,?,?,?,?)
+    `;
+
+    conexao.query(sql, [nome, descricao, preco, estoque, categoria_id], (erro, resultado) => {
+        if (erro) {
+            console.error('Erro ao inserir produto: ', erro);
+            return res.status(500).send('Erro ao adicionar produto.');
+        }
+        res.redirect('/');
+    });
+});
+
 app.get('/clientes', (req, res) => {;
     let sql = 'SELECT * FROM clientes';
     conexao.query(sql, function (erro, clientes_qs) {
@@ -52,9 +83,5 @@ app.get('/clientes', (req, res) => {;
     });
 }
 );
-
-app.get('/adicionarprodutos', (req, res) => {
-    res.render('adicionarprodutos.handlebars');
-});
 
 app.listen(8080);
