@@ -6,7 +6,7 @@
             <div class="card h-100 bg-light border-primary">    
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{produto.nome}}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Categoria: {{produto.categoria_nome}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Categoria: <a href="/produto/categoria/{{produto.categoria_id}}">{{produto.categoria_nome}}</a></h6>
                     <h6 class="card-subtitle mb-2 text-muted">R$ {{produto.preco}}</h6>
                     <p class="card-text">{{produto.descricao}}</p>
                     <p class="card-text">Estoque: {{produto.estoque}}</p>

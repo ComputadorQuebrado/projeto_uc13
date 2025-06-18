@@ -2,25 +2,33 @@
 
 <a href="/categorias/add" function="button">Adicionar</a>
 
-{{#if categorias.length}}
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each categorias}}
-                <tr>
-                    <th scope="row">{{this.id}}</th>
-                    <td>{{this.nome}}</td>
-                    <td>{{this.descricao}}</td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
-{{else}}
-    <p>Sem categorias disponíveis no momento.</p>
-{{/if}}
+<div class="container">
+    {{#if categorias.length}}
+        <div class="table-responsive">
+            <table class="table table-borded table-striped table-hover align-middle">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each categorias}}
+                        <tr>
+                            <th scope="row">{{this.id}}</th>
+                            <td>{{this.nome}}</td>
+                            <td>
+                                {{this.descricao}} 
+                                <a href="/categorias/upd/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/categorias/del/{{this.id}}"><i class="bi bi-trash-fill"></i></a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{else}}
+        <p>Sem categorias disponíveis no momento.</p>
+    {{/if}}
+</div>

@@ -42,6 +42,26 @@ app.get('/', (req, res) => {;
 }
 );
 
+app.get('/produto/categoria/:id', (req, res) => {
+    const id = req.params.id;
+
+    let sql = `SELECT produtos.*, categorias.nome as categoria_nome
+                FROM produtos
+                JOIN categorias
+                ON produtos.categoria_id = categorias.id
+                WHERE produtos.categoria_id = ?`;
+    
+    conexao.query(sql,[id], function(erro, produto_qs){
+        if (erro) {
+            console.error('Erro ao consultar produtos: ', erro);
+            res.status(500).send('Erro ao consultar produtos');
+            return;
+        }
+        
+        res.render('index', { produtos: produto_qs });
+    });
+});
+
 app.get('/produtos/:id', (req,res)=>{
     const id = req.params.id;
     const sql = `SELECT produtos.*,
@@ -103,17 +123,6 @@ app.get('/categorias', (req, res) => {
         }
         res.render('categorias.handlebars', {categorias: categorias_qs});
     });
-});
-
-app.get('/produtos/categoria/:categoria_id', (req,res) =>{
-    const categoria_id = req.params.categoria_id;
-
-    const sql = `
-        SELECT produtos.*, categorias.nome AS categorias_nome
-        FROM produtos
-        JOIN categorias ON produtos.categoria_id = categorias.id
-        WHERE categoria_id = ?
-    `;
 });
 
 app.get('/categorias/add', (req, res) => {
