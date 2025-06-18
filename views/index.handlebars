@@ -1,33 +1,39 @@
+<style>
+  .card:hover {
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+  }
+</style>
+
 <h1>Produtos do E-Commerce PC</h1>
 
-<a href="/produtos/add" function="button">Adicionar</a>
-
-{{#if produtos.length}}
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Preço</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each produtos}}
-                <tr>
-                    <th scope="row">{{this.id}}</th>
-                    <td>{{this.nome}}</td>
-                    <td>{{this.descricao}}</td>
-                    <td>{{this.categoria_id}}</td>
-                    <td>{{this.preco}}</td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
-{{else}}
-    <p>Sem produtos disponíveis no momento.</p>
-{{/if}}
+<div class="container">
+  <a href="/produtos/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Produto</a>
+  <a href="/categorias/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Categoria</a>
+  {{#if produtos.length}}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {{#each produtos}}
+            <div class="col">
+                <div class="card h-100 bg-light border-primary">
+                    <a href="/produtos/{{this.id}}">    
+                        <div class="card-body">
+                            <h5 class="card-title text-primary">{{this.nome}}</h5>
+                            {{!<h6 class="card-subtitle mb-2 text-muted">R$ this.preco</h6>}}
+                            {{!<p class="card-text">this.descricao</p>}}
+                        </div>
+                    </a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+  {{else}}
+    <div class="alert alert-warning text-center" role="alert">
+      Sem produtos disponíveis no momento.
+    </div>
+  {{/if}}
+</div>
 
 {{!
     <table class="table">

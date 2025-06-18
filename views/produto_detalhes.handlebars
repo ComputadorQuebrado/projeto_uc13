@@ -1,0 +1,17 @@
+<div class="container">
+    <a href="/produto/{{produto.id}}/edit" class="btn btn-primary m-3" role="button">Alterar Produto</a>
+    <a href="/produto/{{produto.id}}/delete" class="btn btn-primary m-3" role="button">Apagar Produto</a>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+            <div class="card h-100 bg-light border-primary">    
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{produto.nome}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Categoria: {{produto.categoria_nome}}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">R$ {{produto.preco}}</h6>
+                    <p class="card-text">{{produto.descricao}}</p>
+                    <p class="card-text">Estoque: {{produto.estoque}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
