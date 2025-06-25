@@ -62,7 +62,7 @@ app.get('/produto/categoria/:id', (req, res) => {
     });
 });
 
-app.get('/produtos/:id', (req,res)=>{
+app.get('/produtos/:id/detalhes', (req,res)=>{
     const id = req.params.id;
     const sql = `SELECT produtos.*,
                     categorias.nome AS categoria_nome,
@@ -81,6 +81,19 @@ app.get('/produtos/:id', (req,res)=>{
             return res.status(404).send('Produto não encontrado');
         }
         res.render('produto_detalhes', { produto: produto_qs[0] });
+    });
+});
+
+app.post('/produtos/:id/remover', (req,res) => {
+    const id = req.params.id;
+    const sql = 'DELETE FROM produtos WHERE id = ?';
+
+    conexao.query(sql, [id], (erro, resultado) => {
+        if (erro) {
+            console.error('Erro ao apagar o produto: ', erro);
+            return res.status(500).send('Erro ao apagar o produto.');
+        }
+        res.redirect('/');
     });
 });
 

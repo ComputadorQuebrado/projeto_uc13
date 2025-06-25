@@ -1,11 +1,15 @@
 <div class="container">
-    <a href="/produto/{{produto.id}}/edit" class="btn btn-primary m-3" role="button">Alterar Produto</a>
-    <a href="/produto/{{produto.id}}/delete" class="btn btn-primary m-3" role="button">Apagar Produto</a>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <div class="col">
             <div class="card h-100 bg-light border-primary">    
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{produto.nome}}</h5>
+                    <div>
+                        <button class="btn btn-sm btn-warning me-2 my-1" role="button">Alterar <i class="bi bi-pencil"></i></button>
+                    </div>
+                    <div>
+                        <button class="btn btn-danger btn-sm my-1" onclick="confirmarApagar('/produtos/{{produto.id}}/remover')" role="button">Remover <i class="bi bi-trash"></i></button>
+                    </div>
                     <h6 class="card-subtitle mb-2 text-muted">Categoria: <a href="/produto/categoria/{{produto.categoria_id}}">{{produto.categoria_nome}}</a></h6>
                     <h6 class="card-subtitle mb-2 text-muted">R$ {{produto.preco}}</h6>
                     <p class="card-text">{{produto.descricao}}</p>
@@ -15,3 +19,33 @@
         </div>
     </div>
 </div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="toastConfirmarDelete" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header bg-warning text-dark">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <strong class="me-auto">Confirmação</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Fechar"></button>
+        </div>
+        <div class="toast-body">
+            Tem certeza que deseja apagar este item?
+            <div class="mt-2 pt-2 border-top d-flex justify-content-end gap-2">
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="toast">Cancelar</button>
+                <form id="formDelete" method="POST">
+                    <button type="submit" class="btn btn-sm btn-danger">Apagar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmarApagar(url) {
+        const form = document.getElementById('formDelete');
+        form.action = url;
+
+        const toastEl = document.getElementById('toastConfirmarDelete');
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+</script>
