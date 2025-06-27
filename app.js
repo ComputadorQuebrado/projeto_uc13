@@ -11,6 +11,26 @@ app.use('/static', express.static(__dirname + '/static'));
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
+app.engine('handlebars', engine({
+    helpers: {
+        ifCond: function (v1, operator, v2, options) {
+            switch (operator) {
+                case '==':
+                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                case '===':
+                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                case '!=':
+                    return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                case '<':
+                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                case '>':
+                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                default:
+                    return options.inverse(this);
+            }
+        }
+    }
+}));
 app.set('views', './views');
 
 const conexao = mysql.createConnection({
@@ -97,6 +117,55 @@ app.post('/produtos/:id/remover', (req,res) => {
     });
 });
 
+app.post('/produtos/:id/editar', (req,res) => {
+    const id = req.params.id;
+    const { nome, descricao, preco, estoque, categoria_id } = req.body;
+
+    const sql = `
+        UPDATE produtos SET
+        nome = ?, descricao = ?, preco = ?, estoque = ?, categoria_id = ?
+        WHERE id = ?
+    `;
+    conexao.query(sql, [nome, descricao, preco, estoque, categoria_id, id], (erro, resultado) => {
+        if (erro) {
+            console.error('Erro ao atualizar produto: ', erro);
+            return res.status(500).send('Erro ao atualizar o produto.');
+        }
+        res.redirect(`/produtos/${id}/detalhes`);
+    });
+});
+
+app.get('/produtos/:id/editar', (req,res) => {
+    const id = req.params.id;
+
+    const sqlProduto = `
+        SELECT produtos.*, categorias.nome AS categoria_nome
+        FROM produtos
+        JOIN categorias ON produtos.categoria_id = categorias.id
+        WHERE produtos.id = ?
+    `;
+
+    const sqlCategorias = 'SELECT id, nome FROM categorias';
+
+    conexao.query(sqlProduto, [id], (erro, produto_qs) => {
+        if (erro) return res.status(500).send('Erro ao buscar produto.');
+
+        if (produto_qs.length === 0) return res.status(404).send('Produto não encontrado.');
+
+        const produto = produto_qs[0];
+
+        conexao.query(sqlCategorias, (erro2, categorias_qs) => {
+            if (erro2) return res.status(500).send('Erro ao buscar categorias.');
+
+            res.render('produto_form', {
+                produto,
+                categorias: categorias_qs,
+                formAction: `/produtos/${id}/editar`
+            });
+        });
+    });
+});
+
 app.get('/produtos/add', (req, res) => {
     let sql = 'SELECT * FROM categorias';
     conexao.query(sql, function (erro, categorias_qs){
@@ -105,7 +174,7 @@ app.get('/produtos/add', (req, res) => {
             res.status(500).send('Erro ao consultar categorias');
             return;
         }
-        res.render('adicionarprodutos.handlebars', {categorias: categorias_qs});
+        res.render('produto_form.handlebars', {categorias: categorias_qs});
     });
 });
 

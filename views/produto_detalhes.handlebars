@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{produto.nome}}</h5>
                     <div>
-                        <button class="btn btn-sm btn-warning me-2 my-1" role="button">Alterar <i class="bi bi-pencil"></i></button>
+                        <a class="btn btn-sm btn-warning me-2 my-1" role="button" href="/produtos/{{produto.id}}/editar">Alterar <i class="bi bi-pencil"></i></a>
                     </div>
                     <div>
                         <button class="btn btn-danger btn-sm my-1" onclick="confirmarApagar('/produtos/{{produto.id}}/remover')" role="button">Remover <i class="bi bi-trash"></i></button>
