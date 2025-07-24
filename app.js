@@ -9,6 +9,16 @@ const mysql = require('mysql2');
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/static', express.static(__dirname + '/static'));
 
+const session = require('express-session');
+const bcrypt = require('bcrypt');
+
+app.use (session({
+    secret: 'chave-secreta-ultra-segura',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 3600000 } //1 hora
+}));
+
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.engine('handlebars', engine({
@@ -248,5 +258,37 @@ app.get('/clientes', (req, res) => {;
     });
 }
 );
+
+app.get('/clientes/add', (req, res) => {
+    res.render('usuario_form');
+});
+
+app.post('/clientes/cadastrar', (req, res) => {
+    const {nome, email, senha, endereco } = req.body;
+    
+    bcrypt.hash(senha, 10, (erro, hash) => {
+        if (erro) {
+            console.error('Erro ao criptografar a senha: ', erro);
+            return res.status(500).send('Erro interno no servidor.');
+        }
+        const sqlUsuario = 'INSERT INTO usuarios (nome, email, senha, tipo) VALUES (?, ?, ?, ?)';
+        conexao.query(sqlUsuario, [nome, email, hash, 'comum'], (erro, resultado) => {
+            if (erro) {
+                console.error('Erro ao inserir usuário: ', erro);
+                return res.status(500).send('Erro ao cadastrar usuário.');
+            }
+
+            const usuario_id = resultado.insertId;
+            const sqlCliente = 'INSERT INTO clientes (nome, endereco, usuario_id) VALUES (?, ?, ?)';
+            conexao.query(sqlCliente, [nome, endereco, usuario_id], (erro2) => {
+                if (erro2) {
+                    console.error('Erro ao inserir cliente: ', erro2);
+                    return res.status(500).send('Erro ao cadastrar cliente.');
+                }
+                res.redirect('/');
+            });
+        });
+    });
+});
 
 app.listen(8080);
