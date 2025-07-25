@@ -10,8 +10,12 @@
 <h1>Produtos do E-Commerce PC</h1>
 
 <div class="container">
-  <a href="/produtos/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Produto</a>
-  <a href="/categorias/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Categoria</a>
+  {{#ifCond usuario.tipo '==' 'admin'}}
+    <a href="/produtos/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Produto</a>
+    <a href="/categorias/add" class="btn btn-primary m-3" role="button"><i class="bi bi-plus-square-fill"></i> Adicionar Categoria</a>
+  {{/ifCond}}
+
+  <h2 class="text-center">Produtos Disponíveis</h2>
   {{#if produtos.length}}
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {{#each produtos}}
