@@ -121,7 +121,7 @@ app.get('/', (req, res) => {;
             res.status(500).send('Erro ao consultar produtos');
             return;
         }
-        res.render('index', {produtos: produtos_qs});
+        res.render('index', {produtos: produtos_qs, usuario: req.session.usuario });
     });
 }
 );
